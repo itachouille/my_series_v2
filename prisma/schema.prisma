@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mongodb"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model User {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  clerkUserId String   @unique
+  email       String   @unique
+  name        String?
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  series Serie[]
+}
+
+model Serie {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String
+  apiId        String
+  title        String
+  backdropPath String?
+  season       Float
+  episode      Float
+  user         User     @relation(fields: [userId], references: [clerkUserId], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([userId])
+}
