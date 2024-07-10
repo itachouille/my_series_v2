@@ -5,7 +5,7 @@ interface Show {
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
-  id: string;
+  id: number;
   origin_country: string[];
   original_language: string;
   original_name: string;
@@ -33,10 +33,9 @@ const Collection: React.FC<CollectionProps> = ({ results }) => {
             <li key={item.id}>
               <CardModel
                 title={item.name}
-                backdrop_path={item.backdrop_path}
-                id={item.id}
-                saison={1}
-                episode={1}
+                backdropPath={item.backdrop_path}
+                posterPath={item.poster_path}
+                apiId={item.id}
               />
             </li>
           ))}

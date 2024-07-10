@@ -6,7 +6,7 @@ export default function Loading() {
     <div className="flex flex-col items-center gap-10 pt-5">
       <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:gap-10">
         {Array.from({ length: 6 }, (_, i) => i + 1).map((id) => (
-          <Card key={id} className="max-w-80 flex flex-col items-center">
+          <Card key={id} className="w-80 h-96 flex flex-col items-center">
             <CardHeader>
               <Skeleton className="h-10 w-60 p-6 bg-slate-200" />
             </CardHeader>

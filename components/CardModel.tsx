@@ -7,44 +7,64 @@ import {
   CardTitle,
 } from "./ui/card";
 import { Button } from "./ui/button";
+import { addSerie } from "@/lib/actions/serie.action";
 
-type CardProps = {
+interface CardProps {
   title: string;
-  backdrop_path: string;
-  saison: number;
-  episode: number;
-  id: string;
-};
+  apiId: number;
+  backdropPath?: string;
+  posterPath?: string;
+  season?: number;
+  episode?: number;
+}
 
 const img_path = "https://image.tmdb.org/t/p/w500";
 
 const CardModel = ({
   title,
-  backdrop_path,
-  saison,
+  apiId,
+  backdropPath,
+  posterPath,
+  season,
   episode,
-  id,
 }: CardProps) => {
+  const isValidImage = typeof backdropPath;
   return (
-    <Card className="max-w-80 flex flex-col items-center">
+    <Card className="w-80 h-96 flex flex-col items-center">
       <CardHeader>
         <CardTitle>{title}</CardTitle>
       </CardHeader>
-      <CardContent>
-        <Image
-          src={img_path + backdrop_path}
-          width={300}
-          height={300}
-          alt="TV-Show poster"
-        />
+      <CardContent className="min-h-60">
+        {isValidImage === "string" ? (
+          <Image
+            src={img_path + backdropPath}
+            width={300}
+            height={300}
+            alt="TV-Show poster"
+          />
+        ) : (
+          <Image
+            src={img_path + posterPath}
+            width={300}
+            height={300}
+            alt="TV-Show poster"
+          />
+        )}
       </CardContent>
-      <CardFooter>
+      <CardFooter className="">
         <Button
           size="lg"
-          className="w-full"
-          /* onClick={() =>
-            addSerie({ title, backdrop_path, id, saison, episode }, userId!)
-          } */
+          className=""
+          onClick={() =>
+            addSerie({
+              title,
+              apiId,
+              backdropPath,
+              posterPath,
+              season,
+              episode,
+            })
+          }
         >
           Add
         </Button>

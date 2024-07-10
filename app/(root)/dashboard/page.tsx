@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import Collection from "@/components/Collection";
 
 const Page = async () => {
   const { userId } = auth();
@@ -30,6 +31,9 @@ const Page = async () => {
               <ArrowRight className="ml-1.5 h-5 w-5" />
             </Link>
           </div>
+          {/*   <div>
+            <Collection />
+          </div> */}
         </MaxWidthWrapper>
       </section>
     </div>

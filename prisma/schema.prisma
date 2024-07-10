@@ -23,9 +23,10 @@ model User {
 model Serie {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   userId       String
-  apiId        String
+  apiId        Float
   title        String
   backdropPath String?
+  posterPath   String?
   season       Float
   episode      Float
   user         User     @relation(fields: [userId], references: [clerkUserId], onDelete: Cascade)
