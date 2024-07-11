@@ -5,12 +5,17 @@ import Link from "next/link";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import Collection from "@/components/Collection";
+import { getAllSeries } from "@/lib/actions/serie.action";
+import { Show } from "@/types";
 
 const Page = async () => {
   const { userId } = auth();
   const user = await currentUser();
 
   if (!userId) redirect("/");
+
+  const savedSerie = await getAllSeries();
+  const results: Show[] = savedSerie;
 
   return (
     <div className="bg-slate-50">
@@ -31,9 +36,9 @@ const Page = async () => {
               <ArrowRight className="ml-1.5 h-5 w-5" />
             </Link>
           </div>
-          {/*   <div>
-            <Collection />
-          </div> */}
+          <div className="pt-5">
+            <Collection results={results} />
+          </div>
         </MaxWidthWrapper>
       </section>
     </div>

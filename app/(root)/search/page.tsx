@@ -1,4 +1,3 @@
-import Collection from "@/components/Collection";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import Searchbar from "@/components/Searchbar";
 import { buttonVariants } from "@/components/ui/button";

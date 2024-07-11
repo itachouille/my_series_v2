@@ -1,33 +1,20 @@
-import Image from "next/image";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "./ui/card";
-import { Button } from "./ui/button";
-import { addSerie } from "@/lib/actions/serie.action";
+"use client";
 
-interface CardProps {
-  title: string;
-  apiId: number;
-  backdropPath?: string;
-  posterPath?: string;
-  season?: number;
-  episode?: number;
-}
+import Image from "next/image";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import CardFooters from "./CardFooters";
+import { SerieProps } from "@/types";
 
 const img_path = "https://image.tmdb.org/t/p/w500";
 
-const CardModel = ({
+const CardModel: React.FC<SerieProps> = ({
   title,
-  apiId,
   backdropPath,
   posterPath,
   season,
   episode,
-}: CardProps) => {
+  apiId,
+}: SerieProps) => {
   const isValidImage = typeof backdropPath;
   return (
     <Card className="w-80 h-96 flex flex-col items-center">
@@ -51,24 +38,14 @@ const CardModel = ({
           />
         )}
       </CardContent>
-      <CardFooter className="">
-        <Button
-          size="lg"
-          className=""
-          onClick={() =>
-            addSerie({
-              title,
-              apiId,
-              backdropPath,
-              posterPath,
-              season,
-              episode,
-            })
-          }
-        >
-          Add
-        </Button>
-      </CardFooter>
+      <CardFooters
+        title={title}
+        backdropPath={backdropPath}
+        posterPath={posterPath}
+        season={season}
+        episode={episode}
+        apiId={apiId}
+      />
     </Card>
   );
 };

@@ -3,15 +3,7 @@
 import { currentUser } from "@clerk/nextjs/server";
 import { db } from "../db";
 import { redirect } from "next/navigation";
-
-interface SerieProps {
-  title: string;
-  apiId: number;
-  backdropPath?: string;
-  posterPath?: string;
-  season?: number;
-  episode?: number;
-}
+import { SerieProps, Show } from "@/types";
 
 export const addSerie = async (props: SerieProps) => {
   const user = await currentUser();
@@ -42,10 +34,10 @@ export const addSerie = async (props: SerieProps) => {
   redirect("/dashboard");
 };
 
-export const getAllSeries = async () => {
+export const getAllSeries = async (): Promise<Show[]> => {
   const user = await currentUser();
 
-  if (!user) return null;
+  if (!user) return [];
 
   const loggedInUser = await db.user.findUnique({
     where: {
@@ -53,11 +45,43 @@ export const getAllSeries = async () => {
     },
   });
 
-  const data = await db.serie.findMany({
+  if (!loggedInUser) return [];
+  const series = await db.serie.findMany({
     where: {
-      id: loggedInUser?.id,
+      userId: loggedInUser.clerkUserId,
     },
   });
 
-  console.log(data);
+  return series.map((serie) => ({
+    ...serie,
+    backdropPath: serie.backdropPath ?? undefined,
+    posterPath: serie.posterPath ?? undefined,
+  }));
+};
+
+export const deleteSerie = async (apiId: number) => {
+  const user = await currentUser();
+
+  if (!user) {
+    throw new Error("User not authenticated");
+  }
+
+  const loggedInUser = await db.user.findUnique({
+    where: {
+      clerkUserId: user.id,
+    },
+  });
+
+  if (!loggedInUser) {
+    throw new Error("User not found");
+  }
+
+  await db.serie.deleteMany({
+    where: {
+      userId: loggedInUser.clerkUserId,
+      apiId: apiId,
+    },
+  });
+
+  redirect("/dashboard");
 };

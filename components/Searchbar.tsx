@@ -6,14 +6,13 @@ import { Input } from "./ui/input";
 import { getSeries } from "@/lib/actions/search.action";
 import Collection from "./Collection";
 import Loading from "./Loading";
+import { Show } from "@/types";
 
-const Searchbar = ({
+const Searchbar: React.FC<{ placeholder?: string }> = ({
   placeholder = "Search title...",
-}: {
-  placeholder?: string;
 }) => {
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState<Show[]>([]);
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
 
@@ -27,7 +26,15 @@ const Searchbar = ({
         setResults([]);
         return;
       }
-      setResults(data.results);
+      const formattedResults: Show[] = data.results.map((item: any) => ({
+        apiId: item.id,
+        title: item.name,
+        backdropPath: item.backdrop_path || undefined,
+        posterPath: item.poster_path || undefined,
+        season: item.season || undefined,
+        episode: item.episode || undefined,
+      }));
+      setResults(formattedResults);
     } catch (error) {
       console.log("Error fetching series:", error);
     } finally {

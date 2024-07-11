@@ -1,26 +1,6 @@
+import { CollectionProps } from "@/types";
 import CardModel from "./CardModel";
 import Loading from "./Loading";
-
-interface Show {
-  adult: boolean;
-  backdrop_path: string;
-  genre_ids: number[];
-  id: number;
-  origin_country: string[];
-  original_language: string;
-  original_name: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
-  first_air_date: string;
-  name: string;
-  vote_average: number;
-  vote_count: number;
-}
-
-interface CollectionProps {
-  results: Show[];
-}
 
 const Collection: React.FC<CollectionProps> = ({ results }) => {
   return (
@@ -30,12 +10,14 @@ const Collection: React.FC<CollectionProps> = ({ results }) => {
       ) : (
         <ul className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:gap-10">
           {results.map((item) => (
-            <li key={item.id}>
+            <li key={item.apiId}>
               <CardModel
-                title={item.name}
-                backdropPath={item.backdrop_path}
-                posterPath={item.poster_path}
-                apiId={item.id}
+                title={item.title}
+                backdropPath={item.backdropPath}
+                posterPath={item.posterPath}
+                apiId={item.apiId}
+                season={item.season}
+                episode={item.episode}
               />
             </li>
           ))}
