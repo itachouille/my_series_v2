@@ -44,7 +44,7 @@ const Searchbar: React.FC<{ placeholder?: string }> = ({
   };
 
   return (
-    <div className="">
+    <>
       <form onSubmit={onSearch}>
         <Image src="/search.svg" alt="search" width={24} height={24} />
         <Input
@@ -58,7 +58,7 @@ const Searchbar: React.FC<{ placeholder?: string }> = ({
         {loading && <Loading />}
         {!loading && searched && <Collection results={results} />}
       </div>
-    </div>
+    </>
   );
 };
 

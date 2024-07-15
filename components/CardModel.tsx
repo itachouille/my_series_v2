@@ -17,26 +17,33 @@ const CardModel: React.FC<SerieProps> = ({
 }: SerieProps) => {
   const isValidImage = typeof backdropPath;
   return (
-    <Card className="w-80 h-96 flex flex-col items-center">
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
-      </CardHeader>
-      <CardContent className="min-h-60">
+    <Card>
+      <CardHeader className="p-0">
         {isValidImage === "string" ? (
           <Image
+            className="object-cover w-full h-60 rounded-t-lg"
             src={img_path + backdropPath}
-            width={300}
+            width={200}
             height={300}
-            alt="TV-Show poster"
+            alt="TV-Show image"
           />
         ) : (
           <Image
+            className="object-cover w-full h-60 rounded-t-lg"
             src={img_path + posterPath}
-            width={300}
+            width={200}
             height={300}
-            alt="TV-Show poster"
+            alt="TV-Show image"
           />
         )}
+      </CardHeader>
+      <CardContent className="p-4">
+        <CardTitle className="text-lg font-semibold truncate">
+          {title}
+        </CardTitle>
+        {/* <div className="text-md text-gray-600 dark:text-gray-400">
+          Genre: Action | Year: 2022
+        </div> */}
       </CardContent>
       <CardFooters
         title={title}

@@ -4,6 +4,7 @@ import React from "react";
 import { CardFooter } from "./ui/card";
 import { Button } from "./ui/button";
 import { addSerie, deleteSerie } from "@/lib/actions/serie.action";
+import { Input } from "./ui/input";
 
 const CardFooters = ({
   title,
@@ -14,20 +15,21 @@ const CardFooters = ({
   episode,
 }: SerieProps) => {
   return (
-    <CardFooter className="flex flex-col gap-1">
+    <CardFooter className="flex flex-col">
       {season ? (
         <>
           <div>
             season {season} | episode {episode}
           </div>
-          <div>
-            <Button onClick={() => deleteSerie(apiId)}>delete</Button>
+          <div className="mt-5">
+            <Button variant="destructive" onClick={() => deleteSerie(apiId)}>
+              delete
+            </Button>
           </div>
         </>
       ) : (
         <Button
           size="lg"
-          className=""
           onClick={() =>
             addSerie({
               title,

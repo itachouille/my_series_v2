@@ -85,3 +85,37 @@ export const deleteSerie = async (apiId: number) => {
 
   redirect("/dashboard");
 };
+
+export const updateSerie = async (
+  apiId: number,
+  season: number,
+  episode: number
+) => {
+  const user = await currentUser();
+
+  if (!user) {
+    throw new Error("User not authenticated");
+  }
+  const loggedInUser = await db.user.findUnique({
+    where: {
+      clerkUserId: user.id,
+    },
+  });
+
+  if (!loggedInUser) {
+    throw new Error("User not found");
+  }
+
+  await db.serie.update({
+    where: {
+      userId: loggedInUser.clerkUserId,
+      apiId: apiId,
+    },
+    data: {
+      season: season,
+      episode: episode,
+    },
+  });
+
+  redirect("/dashboard");
+};

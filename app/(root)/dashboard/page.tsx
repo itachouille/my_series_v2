@@ -18,30 +18,26 @@ const Page = async () => {
   const results: Show[] = savedSerie;
 
   return (
-    <div className="bg-slate-50">
-      <section className="flex flex-col">
-        <MaxWidthWrapper className="pb-24 sm:pb-32 xl:pt-24">
-          <div>
-            <h2>Welcome, {user?.firstName}</h2>
-          </div>
-          <div className="pt-5">
-            <Link
-              href="/search"
-              className={buttonVariants({
-                size: "sm",
-                className: "gap-1",
-              })}
-            >
-              Search series
-              <ArrowRight className="ml-1.5 h-5 w-5" />
-            </Link>
-          </div>
-          <div className="pt-5">
-            <Collection results={results} />
-          </div>
-        </MaxWidthWrapper>
-      </section>
-    </div>
+    <section className="flex flex-col bg-slate-50">
+      <MaxWidthWrapper className="pb-24 sm:pb-32">
+        <div className="flex items-center justify-between pt-5">
+          <h2>Welcome, {user?.firstName}</h2>
+          <Link
+            href="/search"
+            className={buttonVariants({
+              size: "sm",
+              className: "gap-1",
+            })}
+          >
+            Search series
+            <ArrowRight className="ml-1.5 h-5 w-5" />
+          </Link>
+        </div>
+        <div className="xl:pt-10">
+          <Collection results={results} />
+        </div>
+      </MaxWidthWrapper>
+    </section>
   );
 };
 
