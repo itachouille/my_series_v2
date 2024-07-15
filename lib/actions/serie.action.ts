@@ -86,12 +86,9 @@ export const deleteSerie = async (apiId: number) => {
   redirect("/dashboard");
 };
 
-export const updateSerie = async (
-  apiId: number,
-  season: number,
-  episode: number
-) => {
+export const increaseEpisode = async (apiId: number, episode: number) => {
   const user = await currentUser();
+  const nextEpisode = episode + 1;
 
   if (!user) {
     throw new Error("User not authenticated");
@@ -106,14 +103,23 @@ export const updateSerie = async (
     throw new Error("User not found");
   }
 
-  await db.serie.update({
+  const serie = await db.serie.findFirst({
     where: {
-      userId: loggedInUser.clerkUserId,
+      userId: loggedInUser.clerkUserId!,
       apiId: apiId,
     },
+  });
+
+  if (!serie) {
+    throw new Error("Serie not found");
+  }
+
+  await db.serie.update({
+    where: {
+      id: serie.id,
+    },
     data: {
-      season: season,
-      episode: episode,
+      episode: nextEpisode,
     },
   });
 

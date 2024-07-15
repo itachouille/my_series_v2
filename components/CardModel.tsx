@@ -17,7 +17,7 @@ const CardModel: React.FC<SerieProps> = ({
 }: SerieProps) => {
   const isValidImage = typeof backdropPath;
   return (
-    <Card>
+    <Card className="min-w-[250px]">
       <CardHeader className="p-0">
         {isValidImage === "string" ? (
           <Image
@@ -37,13 +37,10 @@ const CardModel: React.FC<SerieProps> = ({
           />
         )}
       </CardHeader>
-      <CardContent className="p-4">
-        <CardTitle className="text-lg font-semibold truncate">
+      <CardContent className="p-2">
+        <CardTitle className="text-center text-lg font-semibold truncate">
           {title}
         </CardTitle>
-        {/* <div className="text-md text-gray-600 dark:text-gray-400">
-          Genre: Action | Year: 2022
-        </div> */}
       </CardContent>
       <CardFooters
         title={title}

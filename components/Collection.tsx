@@ -8,7 +8,7 @@ const Collection: React.FC<CollectionProps> = ({ results }) => {
       {results.length <= 0 ? (
         <Loading />
       ) : (
-        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 p-4 md:p-6">
+        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 p-4 md:p-6">
           {results.map((item) => (
             <li key={item.apiId}>
               <CardModel
